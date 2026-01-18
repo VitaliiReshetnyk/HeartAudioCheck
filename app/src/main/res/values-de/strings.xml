@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HeartAudioCheck</string>
+
+    <string name="disclaimer">Keine professionelle medizinische Anwendung. Der Entwickler übernimmt keine Verantwortung für Entscheidungen, die auf Grundlage der App-Ergebnisse getroffen werden.</string>
+    <string name="instruction_place_phone">Für eine korrekte Messung drücken Sie das Mikrofon des Telefons fest gegen den Brustkorb.</string>
+
+    <string name="status_idle">Bereit</string>
+    <string name="status_recording">Aufnahme… bitte still halten (30 s)</string>
+    <string name="status_done">Fertig</string>
+    <string name="status_stopped">Gestoppt</string>
+    <string name="status_recorder_failed">Aufnahme konnte nicht gestartet werden</string>
+
+    <string name="progress_default">0 / 30 s</string>
+    <string name="progress_done">30.0 / 30 s</string>
+    <string name="progress_stopped_early">Frühzeitig gestoppt</string>
+    <string name="progress_format">%1$.1f / 30 s</string>
+
+    <string name="start">Start</string>
+    <string name="stop">Stopp</string>
+    <string name="ok">OK</string>
+    <string name="info_i">i</string>
+
+    <string name="lang_label">Sprache</string>
+    <string name="lang_auto">Auto</string>
+    <string name="lang_en">Englisch</string>
+    <string name="lang_uk">Ukrainisch</string>
+    <string name="lang_de">Deutsch</string>
+
+    <string name="label_prefix">Label: -</string>
+    <string name="conf_prefix">Sicherheit: -</string>
+    <string name="bpm_prefix">BPM: -</string>
+    <string name="quality_prefix">Qualität: -</string>
+    <string name="metrics_prefix">CV: -  RMSSD: -  pNN50: -  AC: -</string>
+    <string name="diagnosis_prefix">Mögliche Diagnose: -</string>
+    <string name="diagnosis_conf_prefix">Diagnose-Sicherheit: -</string>
+
+    <string name="label_value">Label: %1$s</string>
+    <string name="conf_value">Sicherheit: %1$d%%</string>
+    <string name="bpm_value">BPM: %1$.1f</string>
+    <string name="quality_value">Qualität: %1$d%%</string>
+    <string name="metrics_value">CV: %1$.3f  RMSSD: %2$.3f  pNN50: %3$.2f  AC: %4$.2f</string>
+    <string name="diagnosis_value">Mögliche Diagnose: %1$s</string>
+    <string name="diagnosis_conf_value">Diagnose-Sicherheit: %1$d%% (murmurScore %2$.2f)</string>
+
+    <string name="label_regular">Regelmäßiger Rhythmus</string>
+    <string name="label_irregular">Unregelmäßiger Rhythmus</string>
+    <string name="label_insufficient">Unzureichendes Signal</string>
+
+    <string name="diag_regular">Regelmäßiger Rhythmus</string>
+    <string name="diag_afib_like">Mögliches Muster ähnlich Vorhofflimmern</string>
+    <string name="diag_bigeminy_like">Mögliches Muster ähnlich Bigeminie</string>
+    <string name="diag_murmur_like">Mögliches Muster mit Herzgeräusch-Anzeichen</string>
+    <string name="diag_non_specific">Kein spezifisches Muster erkannt</string>
+    <string name="diag_insufficient">Unzureichendes Signal für eine Diagnose</string>
+
+    <string name="exp_label_title">Label</string>
+    <string name="exp_label_body">Allgemeine Rhythmus-Klassifikation aus den Abständen zwischen den Schlägen.</string>
+
+    <string name="exp_conf_title">Sicherheit</string>
+    <string name="exp_conf_body">Wie sicher der Algorithmus bei der Rhythmus-Klasse ist (Qualität + Regelmäßigkeit).</string>
+
+    <string name="exp_bpm_title">BPM</string>
+    <string name="exp_bpm_body">Geschätzte Herzfrequenz in Schlägen pro Minute anhand erkannter Schläge.</string>
+
+    <string name="exp_quality_title">Qualität</string>
+    <string name="exp_quality_body">Signalqualitätswert. Niedrige Qualität kann zu unzuverlässigen Ergebnissen führen.</string>
+
+    <string name="exp_metrics_title">Metriken</string>
+    <string name="exp_metrics_body">CV, RMSSD, pNN50 beschreiben die Variabilität zwischen Schlägen. AC zeigt die Periodizitätsstärke.</string>
+
+    <string name="exp_diagnosis_title">Mögliche Diagnose</string>
+    <string name="exp_diagnosis_body">Grobes Muster-Matching anhand Rhythmus + Audio-Merkmalen. Keine EKG-Diagnose.</string>
+
+    <string name="exp_diagnosis_conf_title">Diagnose-Sicherheit</string>
+    <string name="exp_diagnosis_conf_body">Sicherheit des vorgeschlagenen Musters. MurmurScore entspricht dem Anteil hochfrequenter Energie.</string>
+
+    <string name="signal_graph_title">Signalvisualisierung (30 s)</string>
+
+</resources>

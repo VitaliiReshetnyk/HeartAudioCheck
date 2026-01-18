@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HeartAudioCheck</string>
+
+    <!-- Top texts -->
+    <string name="disclaimer">Не є професійним медичним застосунком. Розробник не несе відповідальності за рішення, прийняті на основі результатів застосунку.</string>
+    <string name="instruction_place_phone">Для коректної роботи прикладіть телефон мікрофоном впритул до грудної клітини.</string>
+
+    <!-- Status -->
+    <string name="status_idle">Очікування</string>
+    <string name="status_recording">Запис… не рухайтесь (30 с)</string>
+    <string name="status_done">Готово</string>
+    <string name="status_stopped">Зупинено</string>
+    <string name="status_recorder_failed">Не вдалося запустити запис</string>
+
+    <!-- Progress -->
+    <string name="progress_default">0 / 30 с</string>
+    <string name="progress_done">30.0 / 30 с</string>
+    <string name="progress_stopped_early">Зупинено раніше</string>
+    <string name="progress_format">%1$.1f / 30 с</string>
+
+    <!-- Buttons / common -->
+    <string name="start">Старт</string>
+    <string name="stop">Стоп</string>
+    <string name="ok">ОК</string>
+    <string name="info_i">i</string>
+
+    <!-- Language -->
+    <string name="lang_label">Мова</string>
+    <string name="lang_auto">Авто</string>
+    <string name="lang_en">Англійська</string>
+    <string name="lang_uk">Українська</string>
+
+    <!-- Result prefixes -->
+    <string name="label_prefix">Мітка: -</string>
+    <string name="conf_prefix">Впевненість: -</string>
+    <string name="bpm_prefix">Пульс: -</string>
+    <string name="quality_prefix">Якість: -</string>
+    <string name="metrics_prefix">CV: -  RMSSD: -  pNN50: -  AC: -</string>
+    <string name="diagnosis_prefix">Можливий діагноз: -</string>
+    <string name="diagnosis_conf_prefix">Впевненість діагнозу: -</string>
+
+    <!-- Result formatted values -->
+    <string name="label_value">Мітка: %1$s</string>
+    <string name="conf_value">Впевненість: %1$d%%</string>
+    <string name="bpm_value">Пульс: %1$.1f</string>
+    <string name="quality_value">Якість: %1$d%%</string>
+    <string name="metrics_value">CV: %1$.3f  RMSSD: %2$.3f  pNN50: %3$.2f  AC: %4$.2f</string>
+    <string name="diagnosis_value">Можливий діагноз: %1$s</string>
+    <string name="diagnosis_conf_value">Впевненість діагнозу: %1$d%% (murmurScore %2$.2f)</string>
+
+    <!-- Label codes -->
+    <string name="label_regular">Регулярний ритм</string>
+    <string name="label_irregular">Нерегулярний ритм</string>
+    <string name="label_insufficient">Недостатній сигнал</string>
+
+    <!-- Diagnosis codes -->
+    <string name="diag_regular">Регулярний ритм</string>
+    <string name="diag_afib_like">Можливий патерн, схожий на фібриляцію передсердь</string>
+    <string name="diag_bigeminy_like">Можливий патерн, схожий на бігемінію</string>
+    <string name="diag_murmur_like">Можливий патерн із ознаками шумів</string>
+    <string name="diag_non_specific">Специфічний патерн не виявлено</string>
+    <string name="diag_insufficient">Недостатній сигнал для діагнозу</string>
+
+    <!-- Explanations (dialogs) -->
+    <string name="exp_label_title">Мітка</string>
+    <string name="exp_label_body">Загальна класифікація ритму за інтервалами між ударами.</string>
+
+    <string name="exp_conf_title">Впевненість</string>
+    <string name="exp_conf_body">Наскільки алгоритм впевнений у мітці ритму з урахуванням якості сигналу та регулярності.</string>
+
+    <string name="exp_bpm_title">Пульс</string>
+    <string name="exp_bpm_body">Оцінка частоти серцевих скорочень за детектованими ударами.</string>
+
+    <string name="exp_quality_title">Якість</string>
+    <string name="exp_quality_body">Оцінка якості сигналу. Низька якість може давати ненадійні результати.</string>
+
+    <string name="exp_metrics_title">Метрики</string>
+    <string name="exp_metrics_body">CV, RMSSD, pNN50 описують варіабельність між ударами. AC показує силу періодичності.</string>
+
+    <string name="exp_diagnosis_title">Можливий діагноз</string>
+    <string name="exp_diagnosis_body">Грубе співставлення патерна за ритмом та аудіо-ознаками. Це не ЕКГ-діагноз.</string>
+
+    <string name="exp_diagnosis_conf_title">Впевненість діагнозу</string>
+    <string name="exp_diagnosis_conf_body">Впевненість у запропонованому патерні. MurmurScore відображає частку високочастотної енергії.</string>
+    <string name="lang_de">Німецька</string>
+
+    <!-- Graph -->
+    <string name="signal_graph_title">Візуалізація сигналу (30 с)</string>
+
+</resources>

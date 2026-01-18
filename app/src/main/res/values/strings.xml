@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HeartAudioCheck</string>
+
+    <!-- Top texts -->
+    <string name="disclaimer">Not a professional medical application. The developer is not responsible for decisions made based on the app’s output.</string>
+    <string name="instruction_place_phone">For correct measurement, press the phone’s microphone firmly against the chest.</string>
+
+    <!-- Status -->
+    <string name="status_idle">Idle</string>
+    <string name="status_recording">Recording… keep still (30s)</string>
+    <string name="status_done">Done</string>
+    <string name="status_stopped">Stopped</string>
+    <string name="status_recorder_failed">Recorder init failed</string>
+
+    <!-- Progress -->
+    <string name="progress_default">0 / 30 s</string>
+    <string name="progress_done">30.0 / 30 s</string>
+    <string name="progress_stopped_early">Stopped early</string>
+    <string name="progress_format">%1$.1f / 30 s</string>
+
+    <!-- Buttons / common -->
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="ok">OK</string>
+    <string name="info_i">i</string>
+
+    <!-- Language -->
+    <string name="lang_label">Language</string>
+    <string name="lang_auto">Auto</string>
+    <string name="lang_en">English</string>
+    <string name="lang_uk">Ukrainian</string>
+
+    <!-- Result prefixes -->
+    <string name="label_prefix">Label: -</string>
+    <string name="conf_prefix">Confidence: -</string>
+    <string name="bpm_prefix">BPM: -</string>
+    <string name="quality_prefix">Quality: -</string>
+    <string name="metrics_prefix">CV: -  RMSSD: -  pNN50: -  AC: -</string>
+    <string name="diagnosis_prefix">Possible diagnosis: -</string>
+    <string name="diagnosis_conf_prefix">Diagnosis confidence: -</string>
+
+    <!-- Result formatted values -->
+    <string name="label_value">Label: %1$s</string>
+    <string name="conf_value">Confidence: %1$d%%</string>
+    <string name="bpm_value">BPM: %1$.1f</string>
+    <string name="quality_value">Quality: %1$d%%</string>
+    <string name="metrics_value">CV: %1$.3f  RMSSD: %2$.3f  pNN50: %3$.2f  AC: %4$.2f</string>
+    <string name="diagnosis_value">Possible diagnosis: %1$s</string>
+    <string name="diagnosis_conf_value">Diagnosis confidence: %1$d%% (murmurScore %2$.2f)</string>
+
+    <!-- Label codes -->
+    <string name="label_regular">Regular rhythm pattern</string>
+    <string name="label_irregular">Irregular rhythm pattern</string>
+    <string name="label_insufficient">Insufficient signal</string>
+
+    <!-- Diagnosis codes -->
+    <string name="diag_regular">Regular rhythm</string>
+    <string name="diag_afib_like">Possible atrial fibrillation–like pattern</string>
+    <string name="diag_bigeminy_like">Possible bigeminy–like pattern</string>
+    <string name="diag_murmur_like">Possible murmur–like pattern</string>
+    <string name="diag_non_specific">No specific pattern detected</string>
+    <string name="diag_insufficient">Insufficient signal for diagnosis</string>
+
+    <!-- Explanations (dialogs) -->
+    <string name="exp_label_title">Label</string>
+    <string name="exp_label_body">General rhythm classification from the detected beat-to-beat intervals.</string>
+
+    <string name="exp_conf_title">Confidence</string>
+    <string name="exp_conf_body">How confident the algorithm is about the rhythm label, based on signal quality and regularity.</string>
+
+    <string name="exp_bpm_title">BPM</string>
+    <string name="exp_bpm_body">Estimated heart rate in beats per minute from detected beats.</string>
+
+    <string name="exp_quality_title">Quality</string>
+    <string name="exp_quality_body">Signal quality score. Low quality may lead to unreliable results.</string>
+
+    <string name="exp_metrics_title">Metrics</string>
+    <string name="exp_metrics_body">CV, RMSSD, pNN50 reflect variability between beats. AC reflects periodicity strength.</string>
+
+    <string name="exp_diagnosis_title">Possible diagnosis</string>
+    <string name="exp_diagnosis_body">A coarse pattern match based on rhythm + additional audio features. Not an ECG diagnosis.</string>
+
+    <string name="exp_diagnosis_conf_title">Diagnosis confidence</string>
+    <string name="exp_diagnosis_conf_body">Confidence for the suggested pattern. MurmurScore reflects a high-frequency component ratio.</string>
+    <string name="lang_de">German</string>
+
+    <!-- Graph -->
+    <string name="signal_graph_title">Signal visualization (30s)</string>
+
+</resources>
