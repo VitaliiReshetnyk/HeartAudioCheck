@@ -47,69 +47,55 @@ class HeartAudioPipeline(private val sampleRate: Int) {
             periodSamples = periodSamplesFull
         )
 
+        // --- RSA / HF proxy (deep metric) ---
+        val durationSec = nRead.toDouble() / sampleRate.toDouble()
+        val rsa = if (durationSec >= 45.0 && q.score >= 0.60) {
+            RsaHfProxy.compute(peaks.peakIndices, sampleRate, q.score)
+        } else {
+            RsaHfProxy.Result(0.0, 0.0, 0.0)
+        }
+
+        // Base labelCode logic (doesn't depend on RSA)
+        val labelCode: LabelCode = if (q.score < 0.60 || rhythm.bpm == 0.0) {
+            LabelCode.INSUFFICIENT
+        } else {
+            val lab = rhythm.label.lowercase()
+            when {
+                lab.contains("regular") -> LabelCode.REGULAR
+                lab.contains("irregular") -> LabelCode.IRREGULAR
+                else -> LabelCode.IRREGULAR
+            }
+        }
+
+        val baseConfidence: Double = if (labelCode == LabelCode.INSUFFICIENT) {
+            q.score.coerceIn(0.0, 1.0)
+        } else {
+            rhythm.confidence.coerceIn(0.0, 1.0)
+        }
+
+        // Diagnosis decision (RSA affects ONLY diagnosis)
         val diag = DiagnosisEngine.decide(
-            rhythmLabel = rhythm.label,
+            rhythmLabel = rhythm.label,              // string inside RhythmAnalysis
             rhythmConfidence = rhythm.confidence,
             murmurScore = murmur.score,
             murmurCycles = murmur.cyclesUsed,
-            qualityScore = q.score
+            qualityScore = q.score,
+            rsaScore = rsa.score,
+            rsaConfidence = rsa.confidence
         )
-
-        val qMin = 0.60
-
-        val labelCode: LabelCode
-        val baseConf: Double
-
-        if (q.score < qMin || rhythm.bpm == 0.0) {
-            labelCode = LabelCode.INSUFFICIENT
-            baseConf = q.score
-        } else {
-            labelCode = labelCodeFromRhythmLabel(rhythm.label)
-            baseConf = rhythm.confidence
-        }
-
-        val diagnosisCode: DiagnosisCode =
-            if (labelCode == LabelCode.INSUFFICIENT) {
-                DiagnosisCode.INSUFFICIENT
-            } else {
-                diagnosisCodeFromDiagLabel(diag.label)
-            }
 
         return FinalResult(
             qualityScore = q.score,
             bpm = rhythm.bpm,
             labelCode = labelCode,
-            confidence = baseConf,
+            confidence = baseConfidence,
             cv = rhythm.cv,
             rmssd = rhythm.rmssd,
             pnn50 = rhythm.pnn50,
             acStrength = period.strength,
-            diagnosisCode = diagnosisCode,
+            diagnosisCode = diag.code,
             diagnosisConfidence = diag.confidence,
             murmurScore = murmur.score
         )
-    }
-
-    private fun labelCodeFromRhythmLabel(label: String): LabelCode {
-        val s = label.trim().lowercase()
-        return when {
-            s.contains("insufficient") -> LabelCode.INSUFFICIENT
-            s.contains("regular") -> LabelCode.REGULAR
-            s.contains("irregular") -> LabelCode.IRREGULAR
-            else -> LabelCode.IRREGULAR
-        }
-    }
-
-    private fun diagnosisCodeFromDiagLabel(label: String): DiagnosisCode {
-        val s = label.trim().lowercase()
-        return when {
-            s.contains("insufficient") -> DiagnosisCode.INSUFFICIENT
-            s.contains("afib") || s.contains("a-fib") || s.contains("atrial") -> DiagnosisCode.AFIB_LIKE
-            s.contains("bigem") -> DiagnosisCode.BIGEMINY_LIKE
-            s.contains("murmur") -> DiagnosisCode.MURMUR_LIKE
-            s.contains("no specific") || s.contains("nonspecific") || s.contains("non-specific") -> DiagnosisCode.NON_SPECIFIC
-            s.contains("regular") -> DiagnosisCode.REGULAR
-            else -> DiagnosisCode.NON_SPECIFIC
-        }
     }
 }

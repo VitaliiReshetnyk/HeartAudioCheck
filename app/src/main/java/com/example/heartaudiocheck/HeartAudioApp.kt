@@ -13,13 +13,29 @@ class HeartAudioApp : Application() {
 
     private fun applySavedLanguage() {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val code = prefs.getString("lang", "auto") ?: "auto"
+
+        // Migration: if an older build saved "auto", treat it as not set
+        val saved = prefs.getString("lang", null)
+        val code = if (saved.isNullOrBlank() || saved == "auto") {
+            val sys = java.util.Locale.getDefault().language.lowercase()
+            val picked = when (sys) {
+                "uk" -> "uk"
+                "de" -> "de"
+                else -> "en"
+            }
+            prefs.edit().putString("lang", picked).apply()
+            picked
+        } else {
+            saved
+        }
 
         val locales = when (code) {
-            "en" -> LocaleListCompat.forLanguageTags("en")
             "uk" -> LocaleListCompat.forLanguageTags("uk")
-            else -> LocaleListCompat.getEmptyLocaleList()
+            "de" -> LocaleListCompat.forLanguageTags("de")
+            else -> LocaleListCompat.forLanguageTags("en")
         }
+
         AppCompatDelegate.setApplicationLocales(locales)
     }
+
 }
