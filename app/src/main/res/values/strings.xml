@@ -3,115 +3,105 @@
 
     <string name="app_name">HeartAudioCheck</string>
 
-    <!-- Top texts -->
     <string name="disclaimer">Not a professional medical application. The developer is not responsible for decisions made based on the app’s output.</string>
-
-
-    <!-- Status -->
-    <string name="status_idle">Idle</string>
-    <string name="status_recording">Recording… keep still (30s)</string>
-    <string name="status_done">Done</string>
-    <string name="status_stopped">Stopped</string>
-    <string name="status_recorder_failed">Recorder init failed</string>
-
-    <!-- Progress -->
-    <string name="progress_default">0 / 30 s</string>
-    <string name="progress_done">30.0 / 30 s</string>
-    <string name="progress_stopped_early">Stopped early</string>
-
-    <!-- Buttons / common -->
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
     <string name="ok">OK</string>
     <string name="info_i">i</string>
 
-    <!-- Language -->
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+
     <string name="lang_label">Language</string>
     <string name="lang_en">English</string>
     <string name="lang_uk">Ukrainian</string>
-
-    <!-- Result prefixes -->
-    <string name="label_prefix">Label: -</string>
-    <string name="conf_prefix">Confidence: -</string>
-    <string name="bpm_prefix">BPM: -</string>
-    <string name="quality_prefix">Quality: -</string>
-    <string name="metrics_prefix">CV: -  RMSSD: -  pNN50: -  AC: -</string>
-    <string name="diagnosis_prefix">Possible diagnosis: -</string>
-    <string name="diagnosis_conf_prefix">Diagnosis confidence: -</string>
-
-    <!-- Result formatted values -->
-    <string name="label_value">Label: %1$s</string>
-    <string name="conf_value">Confidence: %1$d%%</string>
-    <string name="bpm_value">BPM: %1$.1f</string>
-    <string name="quality_value">Quality: %1$d%%</string>
-    <string name="metrics_value">CV: %1$.3f  RMSSD: %2$.3f  pNN50: %3$.2f  AC: %4$.2f</string>
-    <string name="diagnosis_value">Possible diagnosis: %1$s</string>
-    <string name="diagnosis_conf_value">Diagnosis confidence: %1$d%% (murmurScore %2$.2f)</string>
-
-    <!-- Label codes -->
-    <string name="label_regular">Regular rhythm pattern</string>
-    <string name="label_irregular">Irregular rhythm pattern</string>
-    <string name="label_insufficient">Insufficient signal</string>
-
-    <!-- Diagnosis codes -->
-    <string name="diag_regular">Regular rhythm</string>
-    <string name="diag_afib_like">Possible atrial fibrillation–like pattern</string>
-    <string name="diag_bigeminy_like">Possible bigeminy–like pattern</string>
-    <string name="diag_murmur_like">Possible murmur–like pattern</string>
-    <string name="diag_non_specific">No specific pattern detected</string>
-    <string name="diag_insufficient">Insufficient signal for diagnosis</string>
-
-    <!-- Explanations (dialogs) -->
-    <string name="exp_label_title">Label</string>
-    <string name="exp_label_body">General rhythm classification from the detected beat-to-beat intervals.</string>
-
-    <string name="exp_conf_title">Confidence</string>
-    <string name="exp_conf_body">How confident the algorithm is about the rhythm label, based on signal quality and regularity.</string>
-
-    <string name="exp_bpm_title">BPM</string>
-    <string name="exp_bpm_body">Estimated heart rate in beats per minute from detected beats.</string>
-
-    <string name="exp_quality_title">Quality</string>
-    <string name="exp_quality_body">Signal quality score. Low quality may lead to unreliable results.</string>
-
-
-
-
-    <string name="exp_diagnosis_title">Possible diagnosis</string>
-    <string name="exp_diagnosis_body">A coarse pattern match based on rhythm + additional audio features. Not an ECG diagnosis.</string>
-
-    <string name="exp_diagnosis_conf_title">Diagnosis confidence</string>
-    <string name="exp_diagnosis_conf_body">Confidence for the suggested pattern. MurmurScore reflects a high-frequency component ratio.</string>
     <string name="lang_de">German</string>
+
+    <string name="status_idle">Waiting</string>
+    <string name="status_recording">Recording…</string>
+    <string name="status_done">Done</string>
+    <string name="status_stopped">Stopped</string>
+    <string name="status_recorder_failed">Recorder failed</string>
+
+    <string name="progress_default">0.0 / 60 s</string>
+    <string name="progress_format">%1$.1f / %2$d s</string>
+    <integer name="progress_total_seconds">60</integer>
+
     <string name="stage_10s">10s</string>
     <string name="stage_20s">20s</string>
     <string name="stage_30s">30s</string>
     <string name="stage_60s">60s</string>
-    <string name="stage_hint">Tap a time marker to see what becomes available.</string>
 
-    <string name="stage1_title">After 10 seconds</string>
-    <string name="stage1_body">Rough BPM estimate and initial signal quality. Good for quick orientation.</string>
+    <string name="stage_hint">Tap a time mark to see what becomes available.</string>
+    <string name="instruction_place_phone">Place the phone microphone against your chest. Breathe calmly, do not talk, move, or walk.</string>
 
-    <string name="stage2_title">After 20 seconds</string>
-    <string name="stage2_body">More stable beat detection and basic rhythm regularity. Short-window metrics may be noisy.</string>
+    <string name="results_title">Results</string>
 
-    <string name="stage3_title">After 30 seconds</string>
-    <string name="stage3_body">Full current analysis: rhythm label, confidence, HRV-like metrics and murmur score (if signal quality allows).</string>
+    <string name="label_prefix">Label:</string>
+    <string name="conf_prefix">Confidence:</string>
+    <string name="bpm_prefix">BPM:</string>
+    <string name="quality_prefix">Quality:</string>
+    <string name="metrics_prefix">CV / RMSSD / pNN50 / AC:</string>
+    <string name="diagnosis_prefix">Possible diagnosis:</string>
+    <string name="diagnosis_conf_prefix">Diagnosis confidence:</string>
 
-    <string name="stage4_title">After 60 seconds</string>
-    <string name="stage4_body">Deep analysis window: more stable HRV and respiration-linked variability proxy (HF/RSA). Best for calm sitting and steady breathing.</string>
-    <string name="stage_ready_10">Stage 1 ready (10s)</string>
-    <string name="stage_ready_20">Stage 2 ready (20s)</string>
-    <string name="stage_ready_30">Stage 3 ready (30s)</string>
-    <string name="stage_ready_60">Stage 4 ready (60s)</string>
+    <string name="label_value">Label: %1$s</string>
+    <string name="conf_value">Confidence: %1$d%%</string>
+    <string name="bpm_value">BPM: %1$.1f</string>
+    <string name="quality_value">Quality: %1$d%%</string>
+    <string name="metrics_value">CV: %1$.3f   RMSSD: %2$.3f   pNN50: %3$.2f   AC: %4$.2f</string>
+    <string name="diagnosis_value">Possible diagnosis: %1$s</string>
+    <string name="diagnosis_conf_value">Diagnosis confidence: %1$d%% (murmurScore %2$.2f)</string>
 
-    <string name="progress_format">%1$.1f / %2$d s</string>
-    <integer name="progress_total_seconds">60</integer>
+    <string name="label_regular">Regular rhythm pattern</string>
+    <string name="label_irregular">Irregular rhythm pattern</string>
+    <string name="label_insufficient">Insufficient signal</string>
+
+    <string name="diag_regular">Regular</string>
+    <string name="diag_afib_like">Possible AFib-like pattern</string>
+    <string name="diag_bigeminy_like">Possible bigeminy-like pattern</string>
+    <string name="diag_murmur_like">Possible murmur-like pattern</string>
+    <string name="diag_non_specific">Non-specific irregularity</string>
+    <string name="diag_insufficient">Insufficient</string>
+
     <string name="signal_graph_title">Signal visualization (%.0f s)</string>
+    <string name="signal_graph_title_static">Signal visualization</string>
 
-    <string name="instruction_place_phone">For correct measurement, press the phone’s microphone firmly against the chest. Breathe normally and stay still. Avoid speaking, swallowing, or moving.</string>
+    <!-- Info dialogs -->
+    <string name="exp_label_title">Label</string>
+    <string name="exp_label_body">High-level rhythm classification.</string>
 
-    <string name="exp_metrics_body">CV (Coefficient of Variation): variability of beat-to-beat intervals (RR). Higher values usually mean less stable rhythm.\n\nRMSSD: short-term variability (sensitive to fast changes). It increases with stronger respiration-linked variability (RSA) and can also rise with irregularity.\n\npNN50: percentage of neighboring RR intervals that differ by more than 50 ms. Higher values usually indicate stronger short-term variability.\n\nAC (Autocorrelation strength): how periodic the heartbeat envelope looks. Higher values usually mean a clearer repeating pattern.\n\nImportant: HRV metrics are reliable only with good signal quality and enough recording time. Movement, swallowing, talking, or forced breathing can distort them.</string>
+    <string name="exp_conf_title">Confidence</string>
+    <string name="exp_conf_body">Model confidence for the label.</string>
+
+    <string name="exp_bpm_title">BPM</string>
+    <string name="exp_bpm_body">Estimated beats per minute.</string>
+
+    <string name="exp_quality_title">Quality</string>
+    <string name="exp_quality_body">Signal quality score.</string>
+
     <string name="exp_metrics_title">Metrics</string>
+    <string name="exp_metrics_body">CV (coefficient of variation): variability of beat-to-beat (RR) intervals. Higher values usually mean a less stable rhythm.\n\nRMSSD: short-term variability (sensitive to fast changes). It increases with pronounced respiratory sinus arrhythmia (RSA) and may also increase with irregularity.\n\npNN50: fraction of adjacent RR intervals that differ by more than 50 ms. Higher values usually indicate stronger short-term variability.\n\nAC (autocorrelation strength): how “periodic” the signal looks. Higher values usually indicate a clearer repeating pattern.\n\nImportant: HRV-like metrics are reliable only with good signal quality and sufficient recording duration. Movement, swallowing, talking, or forced breathing can distort the result.</string>
+
+    <string name="exp_diagnosis_title">Diagnosis</string>
+    <string name="exp_diagnosis_body">Heuristic diagnostic suggestion (not medical).</string>
+
+    <string name="exp_diagnosis_conf_title">Diagnosis confidence</string>
+    <string name="exp_diagnosis_conf_body">Confidence and extra score used by the diagnosis engine.</string>
+
+    <string name="stage1_title">10s stage</string>
+    <string name="stage1_body">Basic BPM estimation.</string>
+
+    <string name="stage2_title">20s stage</string>
+    <string name="stage2_body">More stable rhythm estimate.</string>
+
+    <string name="stage3_title">30s stage</string>
+    <string name="stage3_body">Full analysis.</string>
+
+    <string name="stage4_title">60s stage</string>
+    <string name="stage4_body">Extended analysis (HRV / RSA-proxy).</string>
+
+    <string name="stage_ready_10">10s analysis ready</string>
+    <string name="stage_ready_20">20s analysis ready</string>
+    <string name="stage_ready_30">30s analysis ready</string>
+    <string name="stage_ready_60">60s analysis ready</string>
 
 </resources>
