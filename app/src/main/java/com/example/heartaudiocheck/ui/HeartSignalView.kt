@@ -1,163 +1,137 @@
 package com.example.heartaudiocheck.ui
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
+import kotlin.math.ceil
 import kotlin.math.max
+import kotlin.math.min
 
 class HeartSignalView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
-    private var values: FloatArray? = null
-    private var durationSec: Float = 30f
-    private var sampleRateHz: Float = 100f
+    private var series: FloatArray = FloatArray(0)
+    private var durationSec: Float = 0f
+    private var sampleRateHz: Int = 100
 
-    private var textColor: Int = 0xFFFFFFFF.toInt()
-    private var secondaryColor: Int = 0xCCFFFFFF.toInt()
+    private var pxPerSecond: Float = dp(20f) // 20dp per second -> 60s ~ 1200dp (scrollable)
+    private var padLeft = dp(12f)
+    private var padRight = dp(12f)
+    private var padTop = dp(10f)
+    private var padBottom = dp(20f)
 
-    private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val paintAxis = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = dp(2f)
+        strokeWidth = dp(1.2f)
     }
 
-    private val axisPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val paintLine = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = dp(1f)
+        strokeWidth = dp(1.8f)
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
     }
 
-    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val paintText = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = sp(12f)
     }
 
-    private val tickPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        strokeWidth = dp(1f)
-    }
-
-    private var pxPerSec = dp(120f)
-    private val pad = dp(12f)
-    private val axisH = dp(22f)
-
-    init {
-        resolveThemeColors()
-        applyPaintColors()
-    }
-
-    private fun resolveThemeColors() {
-        // textColorPrimary
-        val tv = TypedValue()
-        if (context.theme.resolveAttribute(android.R.attr.textColorPrimary, tv, true)) {
-            val csl: ColorStateList? = try {
-                context.getColorStateList(tv.resourceId)
-            } catch (_: Exception) {
-                null
-            }
-            textColor = csl?.defaultColor ?: tv.data
-        }
-
-        // textColorSecondary as fallback for axes
-        val tv2 = TypedValue()
-        if (context.theme.resolveAttribute(android.R.attr.textColorSecondary, tv2, true)) {
-            val csl2: ColorStateList? = try {
-                context.getColorStateList(tv2.resourceId)
-            } catch (_: Exception) {
-                null
-            }
-            secondaryColor = csl2?.defaultColor ?: tv2.data
-        } else {
-            secondaryColor = textColor
-        }
-    }
-
-    private fun applyPaintColors() {
-        linePaint.color = textColor
-        axisPaint.color = secondaryColor
-        axisPaint.alpha = 120
-
-        tickPaint.color = secondaryColor
-        tickPaint.alpha = 160
-
-        textPaint.color = secondaryColor
-        textPaint.alpha = 200
-    }
-
-    fun setSeries(values: FloatArray, durationSec: Float, sampleRateHz: Float) {
-        this.values = values
+    fun setSeries(values: FloatArray, durationSec: Float, sampleRateHz: Int) {
+        this.series = values
         this.durationSec = durationSec
-        this.sampleRateHz = sampleRateHz
-        requestLayout()
-        invalidate()
-    }
+        this.sampleRateHz = if (sampleRateHz > 0f) sampleRateHz else 100
 
-    fun clearSeries() {
-        values = null
         requestLayout()
         invalidate()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val h = MeasureSpec.getSize(heightMeasureSpec)
-        val wWanted = max(suggestedMinimumWidth, (durationSec * pxPerSec + pad * 2).toInt())
-        val w = resolveSize(wWanted, widthMeasureSpec)
-        val hh = resolveSize(max(h, dp(140f).toInt()), heightMeasureSpec)
-        setMeasuredDimension(w, hh)
+        val contentW = (durationSec * pxPerSecond + padLeft + padRight).toInt().coerceAtLeast(suggestedMinimumWidth)
+        val w = resolveSize(contentW, widthMeasureSpec)
+        setMeasuredDimension(w, h)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // in case theme changes at runtime / locale recreate
-        resolveThemeColors()
-        applyPaintColors()
+        // Use system-like colors (same family as text)
+        val baseTextColor = try { (rootView.findViewById<View>(android.R.id.content) as? View)?.solidColor ?: 0 } catch (_: Throwable) { 0 }
+        val textColor = if (paintText.color != 0) paintText.color else 0xFFFFFFFF.toInt()
+
+        // Better: take current theme text color from this view's context by inheriting from default text appearance
+        // But since this is a custom view, we keep it readable:
+        paintAxis.color = 0x66FFFFFF.toInt()
+        paintLine.color = 0xCCFFFFFF.toInt()
+        paintText.color = 0xCCFFFFFF.toInt()
 
         val w = width.toFloat()
         val h = height.toFloat()
+        val left = padLeft
+        val top = padTop
+        val right = w - padRight
+        val bottom = h - padBottom
 
-        val plotTop = pad
-        val plotBottom = h - pad - axisH
-        val plotH = max(1f, plotBottom - plotTop)
+        if (series.isEmpty() || durationSec <= 0f) {
+            // Draw only axes + 0s label
+            canvas.drawLine(left, bottom, right, bottom, paintAxis)
+            canvas.drawLine(left, top, left, bottom, paintAxis)
+            canvas.drawText("0s", left, h - dp(4f), paintText)
+            return
+        }
 
-        // baseline
-        canvas.drawLine(pad, plotBottom, w - pad, plotBottom, axisPaint)
+        // Axes
+        canvas.drawLine(left, bottom, right, bottom, paintAxis)
+        canvas.drawLine(left, top, left, bottom, paintAxis)
 
-        // time ticks
-        drawTimeAxis(canvas, plotBottom + dp(6f), w)
+        // Time ticks every 5 seconds, labels every 10 seconds
+        val tickStepSec = 5
+        val labelStepSec = 10
+        val total = ceil(durationSec).toInt()
 
-        val v = values ?: return
-        if (v.isEmpty()) return
+        for (t in 0..total step tickStepSec) {
+            val x = left + t * pxPerSecond
+            if (x > right) break
+            val tickH = if (t % labelStepSec == 0) dp(10f) else dp(6f)
+            canvas.drawLine(x, bottom, x, bottom + tickH, paintAxis)
+            if (t % labelStepSec == 0) {
+                canvas.drawText("${t}s", x - dp(6f), h - dp(4f), paintText)
+            }
+        }
 
-        val n = v.size
-        var prevX = pad
-        var prevY = plotBottom - (v[0].coerceIn(0f, 1f) * plotH)
+        // Robust min/max (avoid flatline)
+        var minV = Float.POSITIVE_INFINITY
+        var maxV = Float.NEGATIVE_INFINITY
+        for (v in series) {
+            if (v < minV) minV = v
+            if (v > maxV) maxV = v
+        }
+
+        // If almost constant -> show a centered line (still visible)
+        val range = max(1e-6f, maxV - minV)
+        val usableH = max(1f, bottom - top)
+
+        val n = series.size
+        val dt = 1f / sampleRateHz
+        val maxX = left + durationSec * pxPerSecond
+
+        // Draw polyline
+        var prevX = left
+        var prevY = bottom - ((series[0] - minV) / range) * usableH
 
         for (i in 1 until n) {
-            val t = i / sampleRateHz
-            val x = pad + t * pxPerSec
-            val y = plotBottom - (v[i].coerceIn(0f, 1f) * plotH)
-            canvas.drawLine(prevX, prevY, x, y, linePaint)
+            val t = i * dt
+            if (t > durationSec) break
+            val x = left + t * pxPerSecond
+            if (x > maxX) break
+            val y = bottom - ((series[i] - minV) / range) * usableH
+            canvas.drawLine(prevX, prevY, x, y, paintLine)
             prevX = x
             prevY = y
-            if (x > w - pad) break
-        }
-    }
-
-    private fun drawTimeAxis(canvas: Canvas, y: Float, w: Float) {
-        val tickEverySec = 5
-        val maxSec = durationSec.toInt()
-
-        for (s in 0..maxSec step tickEverySec) {
-            val x = pad + s * pxPerSec
-            if (x > w - pad) break
-
-            canvas.drawLine(x, y, x, y + dp(8f), tickPaint)
-
-            val label = "${s}s"
-            canvas.drawText(label, x + dp(2f), y + dp(20f), textPaint)
         }
     }
 

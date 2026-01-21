@@ -50,6 +50,70 @@
             android:layout_marginTop="6dp"
             android:text="@string/progress_default" />
 
+        <!-- Clickable stage markers -->
+        <LinearLayout
+            android:id="@+id/stageRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/stage10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                android:text="@string/stage_10s"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/stage20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:gravity="center"
+                android:text="@string/stage_20s"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/stage30"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:gravity="center"
+                android:text="@string/stage_30s"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/stage60"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:gravity="center"
+                android:text="@string/stage_60s"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/stageHintText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/stage_hint"
+            android:textSize="12sp" />
+
+
         <TextView
             android:id="@+id/instructionText"
             android:layout_width="match_parent"

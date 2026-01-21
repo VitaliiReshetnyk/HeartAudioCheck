@@ -49,17 +49,36 @@ class MainActivity : AppCompatActivity() {
         val diagnosisText = findViewById<TextView>(R.id.diagnosisText)
         val diagnosisConfText = findViewById<TextView>(R.id.diagnosisConfText)
 
+        val signalTitle = findViewById<TextView>(R.id.signalTitle)
         val signalView = findViewById<HeartSignalView>(R.id.signalView)
 
-        // restore UI
-        if (vm.statusText.isNotEmpty()) statusText.text = vm.statusText
+        val stage10 = findViewById<TextView>(R.id.stage10)
+        val stage20 = findViewById<TextView>(R.id.stage20)
+        val stage30 = findViewById<TextView>(R.id.stage30)
+        val stage60 = findViewById<TextView>(R.id.stage60)
+
+        val durationMs = 60_000L
+        val totalSec = (durationMs / 1000L).toInt()
+        progressBar.max = durationMs.toInt()
+
+        statusText.setText(vm.statusResId)
+
         progressBar.progress = vm.progressMs
-        if (vm.progressLabel.isNotEmpty()) progressTimeText.text = vm.progressLabel
+        progressTimeText.text = getString(
+            R.string.progress_format,
+            vm.progressMs / 1000.0,
+            totalSec
+        )
+
         vm.lastResult?.let {
             renderResult(it, labelText, confText, bpmText, qualityText, metricsText, diagnosisText, diagnosisConfText)
         }
-        vm.signalValues?.let { arr ->
-            signalView.setSeries(arr, vm.signalDurationSec, vm.signalSampleRateHz)
+
+        if (vm.signalValues != null) {
+            signalView.setSeries(vm.signalValues!!, vm.signalDurationSec, vm.signalSampleRateHz)
+            signalTitle.text = getString(R.string.signal_graph_title, vm.signalDurationSec) // ✅ Float
+        } else {
+            signalTitle.text = getString(R.string.signal_graph_title, 0f) // ✅ Float
         }
 
         setupLanguageSpinner(langSpinner)
@@ -80,6 +99,11 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.infoDiagnosisBtn).setOnClickListener { showInfo(R.string.exp_diagnosis_title, R.string.exp_diagnosis_body) }
         findViewById<Button>(R.id.infoDiagnosisConfBtn).setOnClickListener { showInfo(R.string.exp_diagnosis_conf_title, R.string.exp_diagnosis_conf_body) }
 
+        stage10.setOnClickListener { showInfo(R.string.stage1_title, R.string.stage1_body) }
+        stage20.setOnClickListener { showInfo(R.string.stage2_title, R.string.stage2_body) }
+        stage30.setOnClickListener { showInfo(R.string.stage3_title, R.string.stage3_body) }
+        stage60.setOnClickListener { showInfo(R.string.stage4_title, R.string.stage4_body) }
+
         val recorder = AudioRecorder(16000)
         val pipeline = HeartAudioPipeline(16000)
 
@@ -89,6 +113,27 @@ class MainActivity : AppCompatActivity() {
             return ContextCompat.checkSelfPermission(
                 this, Manifest.permission.RECORD_AUDIO
             ) == PackageManager.PERMISSION_GRANTED
+        }
+
+        fun finalizeAndShow(raw: ShortArray, nRead: Int) {
+            val res = pipeline.analyze(raw, nRead)
+
+            val series = HeartSignalExtractor.buildEnvelopeSeries(
+                raw = raw,
+                nRead = nRead,
+                sampleRate = 16000,
+                outHz = 100
+            )
+
+            vm.lastResult = res
+            vm.signalValues = series.values
+            vm.signalDurationSec = series.durationSec
+            vm.signalSampleRateHz = series.sampleRateHz
+
+            renderResult(res, labelText, confText, bpmText, qualityText, metricsText, diagnosisText, diagnosisConfText)
+
+            signalView.setSeries(series.values, series.durationSec, series.sampleRateHz)
+            signalTitle.text = getString(R.string.signal_graph_title, series.durationSec) // ✅ Float
         }
 
         startBtn.setOnClickListener {
@@ -101,8 +146,8 @@ class MainActivity : AppCompatActivity() {
 
             val ok = recorder.start()
             if (!ok) {
-                statusText.text = getString(R.string.status_recorder_failed)
-                vm.statusText = statusText.text.toString()
+                vm.statusResId = R.string.status_recorder_failed
+                statusText.setText(vm.statusResId)
                 return@setOnClickListener
             }
 
@@ -110,35 +155,78 @@ class MainActivity : AppCompatActivity() {
             startBtn.isEnabled = false
             stopBtn.isEnabled = true
 
-            statusText.text = getString(R.string.status_recording)
-            vm.statusText = statusText.text.toString()
+            vm.statusResId = R.string.status_recording
+            statusText.setText(vm.statusResId)
 
-            progressBar.progress = 0
-            progressTimeText.text = getString(R.string.progress_default)
             vm.progressMs = 0
-            vm.progressLabel = progressTimeText.text.toString()
+            progressBar.progress = 0
+            progressTimeText.text = getString(R.string.progress_format, 0.0, totalSec)
 
             lifecycleScope.launch(Dispatchers.Default) {
                 val chunk = ShortArray(16000)
-                val all = ArrayList<Short>(16000 * 30)
-                val durationMs = 30_000L
+                val all = ArrayList<Short>(16000 * 60)
                 val t0 = System.currentTimeMillis()
+
+                var stage10Done = vm.stageReached >= 1
+                var stage20Done = vm.stageReached >= 2
+                var stage30Done = vm.stageReached >= 3
+                var stage60Done = vm.stageReached >= 4
+
+                fun snapshot(list: ArrayList<Short>): ShortArray {
+                    val arr = ShortArray(list.size)
+                    for (i in list.indices) arr[i] = list[i]
+                    return arr
+                }
+
+                fun runStage(stage: Int, rawSnap: ShortArray) {
+                    lifecycleScope.launch(Dispatchers.Default) {
+                        val res = pipeline.analyze(rawSnap, rawSnap.size)
+                        launch(Dispatchers.Main) {
+                            vm.lastResult = res
+                            vm.stageReached = maxOf(vm.stageReached, stage)
+                            renderResult(res, labelText, confText, bpmText, qualityText, metricsText, diagnosisText, diagnosisConfText)
+
+                            vm.statusResId = when (stage) {
+                                1 -> R.string.stage_ready_10
+                                2 -> R.string.stage_ready_20
+                                3 -> R.string.stage_ready_30
+                                else -> R.string.stage_ready_60
+                            }
+                            statusText.setText(vm.statusResId)
+                        }
+                    }
+                }
 
                 while (isRecording && System.currentTimeMillis() - t0 < durationMs) {
                     val n = recorder.readShorts(chunk)
                     for (i in 0 until n) all.add(chunk[i])
 
-                    val elapsed = System.currentTimeMillis() - t0
+                    val elapsed = (System.currentTimeMillis() - t0).coerceAtLeast(0L)
                     val elapsedClamped = elapsed.toInt().coerceIn(0, durationMs.toInt())
                     val sec = elapsedClamped / 1000.0
 
                     launch(Dispatchers.Main) {
+                        vm.progressMs = elapsedClamped
                         progressBar.progress = elapsedClamped
-                        progressTimeText.text = getString(R.string.progress_format, sec)
+                        progressTimeText.text = getString(R.string.progress_format, sec, totalSec)
                     }
 
-                    vm.progressMs = elapsedClamped
-                    vm.progressLabel = getString(R.string.progress_format, sec)
+                    if (!stage10Done && elapsedClamped >= 10_000) {
+                        stage10Done = true
+                        runStage(1, snapshot(all))
+                    }
+                    if (!stage20Done && elapsedClamped >= 20_000) {
+                        stage20Done = true
+                        runStage(2, snapshot(all))
+                    }
+                    if (!stage30Done && elapsedClamped >= 30_000) {
+                        stage30Done = true
+                        runStage(3, snapshot(all))
+                    }
+                    if (!stage60Done && elapsedClamped >= 60_000) {
+                        stage60Done = true
+                        runStage(4, snapshot(all))
+                    }
 
                     delay(20)
                 }
@@ -149,51 +237,35 @@ class MainActivity : AppCompatActivity() {
                 val raw = ShortArray(all.size)
                 for (i in all.indices) raw[i] = all[i]
 
-                val res = pipeline.analyze(raw, raw.size)
-
-                val series = HeartSignalExtractor.buildEnvelopeSeries(
-                    raw = raw,
-                    nRead = raw.size,
-                    sampleRate = 16000,
-                    outHz = 100
-                )
-
                 launch(Dispatchers.Main) {
                     startBtn.isEnabled = true
                     stopBtn.isEnabled = false
 
-                    statusText.text = getString(R.string.status_done)
-                    vm.statusText = statusText.text.toString()
+                    vm.statusResId = R.string.status_done
+                    statusText.setText(vm.statusResId)
 
-                    progressBar.progress = 30_000
-                    progressTimeText.text = getString(R.string.progress_done)
-                    vm.progressMs = 30_000
-                    vm.progressLabel = progressTimeText.text.toString()
+                    if (vm.progressMs >= durationMs.toInt()) {
+                        progressBar.progress = durationMs.toInt()
+                        progressTimeText.text = getString(R.string.progress_format, totalSec.toDouble(), totalSec)
+                        vm.progressMs = durationMs.toInt()
+                    }
 
-                    vm.lastResult = res
-                    renderResult(res, labelText, confText, bpmText, qualityText, metricsText, diagnosisText, diagnosisConfText)
-
-                    vm.signalValues = series.values
-                    vm.signalDurationSec = series.durationSec
-                    vm.signalSampleRateHz = series.sampleRateHz
-                    signalView.setSeries(series.values, series.durationSec, series.sampleRateHz)
+                    finalizeAndShow(raw, raw.size)
                 }
             }
         }
 
         stopBtn.setOnClickListener {
             if (!isRecording) return@setOnClickListener
+
             isRecording = false
             recorder.stop()
 
             startBtn.isEnabled = true
             stopBtn.isEnabled = false
 
-            statusText.text = getString(R.string.status_stopped)
-            vm.statusText = statusText.text.toString()
-
-            progressTimeText.text = getString(R.string.progress_stopped_early)
-            vm.progressLabel = progressTimeText.text.toString()
+            vm.statusResId = R.string.status_stopped
+            statusText.setText(vm.statusResId)
         }
     }
 
@@ -206,7 +278,6 @@ class MainActivity : AppCompatActivity() {
             LangOption("en", getString(R.string.lang_en)),
             LangOption("uk", getString(R.string.lang_uk)),
             LangOption("de", getString(R.string.lang_de)),
-            LangOption("auto", getString(R.string.lang_auto))
         )
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options.map { it.label })
@@ -217,9 +288,8 @@ class MainActivity : AppCompatActivity() {
             return if (idx >= 0) idx else 0
         }
 
-        // IMPORTANT: set selection WITHOUT listener (so it won't fire)
         spinner.onItemSelectedListener = null
-        val current = prefs.getString("lang", "en") ?: "en"
+        val current = prefs.getString("lang", "en").let { if (it == "auto") "en" else it } ?: "en"
         spinner.setSelection(codeToPos(current), false)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -230,9 +300,7 @@ class MainActivity : AppCompatActivity() {
 
                 prefs.edit().putString("lang", newLang).apply()
                 applyAppLanguage(newLang)
-
-                // DO NOT call recreate() here.
-                // AppCompatDelegate will handle activity restart when needed.
+                recreate()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -247,10 +315,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyAppLanguage(code: String) {
         val locales = when (code) {
-            "en" -> LocaleListCompat.forLanguageTags("en")
             "uk" -> LocaleListCompat.forLanguageTags("uk")
             "de" -> LocaleListCompat.forLanguageTags("de")
-            else -> LocaleListCompat.getEmptyLocaleList() // auto
+            else -> LocaleListCompat.forLanguageTags("en")
         }
         AppCompatDelegate.setApplicationLocales(locales)
     }

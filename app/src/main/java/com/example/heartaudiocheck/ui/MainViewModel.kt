@@ -1,30 +1,19 @@
 package com.example.heartaudiocheck.ui
 
-import androidx.lifecycle.SavedStateHandle
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.example.heartaudiocheck.R
 import com.example.heartaudiocheck.analysis.FinalResult
 
-class MainViewModel(private val state: SavedStateHandle) : ViewModel() {
+class MainViewModel : ViewModel() {
+    @StringRes var statusResId: Int = R.string.status_idle
 
-    var lastResult: FinalResult?
-        get() = state.get<FinalResult>("lastResult")
-        set(value) { state["lastResult"] = value }
+    var progressMs: Int = 0
+    var stageReached: Int = 0
 
-    var statusText: String
-        get() = state["statusText"] ?: ""
-        set(value) { state["statusText"] = value }
+    var lastResult: FinalResult? = null
 
-    var progressMs: Int
-        get() = state["progressMs"] ?: 0
-        set(value) { state["progressMs"] = value }
-
-    var progressLabel: String
-        get() = state["progressLabel"] ?: ""
-        set(value) { state["progressLabel"] = value }
-
-
-    // Для графіка:
     var signalValues: FloatArray? = null
-    var signalDurationSec: Float = 30f
-    var signalSampleRateHz: Float = 100f
+    var signalDurationSec: Float = 0f
+    var signalSampleRateHz: Int = 0
 }

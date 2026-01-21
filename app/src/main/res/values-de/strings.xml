@@ -4,7 +4,6 @@
     <string name="app_name">HeartAudioCheck</string>
 
     <string name="disclaimer">Keine professionelle medizinische Anwendung. Der Entwickler übernimmt keine Verantwortung für Entscheidungen, die auf Grundlage der App-Ergebnisse getroffen werden.</string>
-    <string name="instruction_place_phone">Für eine korrekte Messung drücken Sie das Mikrofon des Telefons fest gegen den Brustkorb.</string>
 
     <string name="status_idle">Bereit</string>
     <string name="status_recording">Aufnahme… bitte still halten (30 s)</string>
@@ -15,7 +14,6 @@
     <string name="progress_default">0 / 30 s</string>
     <string name="progress_done">30.0 / 30 s</string>
     <string name="progress_stopped_early">Frühzeitig gestoppt</string>
-    <string name="progress_format">%1$.1f / 30 s</string>
 
     <string name="start">Start</string>
     <string name="stop">Stopp</string>
@@ -23,7 +21,6 @@
     <string name="info_i">i</string>
 
     <string name="lang_label">Sprache</string>
-    <string name="lang_auto">Auto</string>
     <string name="lang_en">Englisch</string>
     <string name="lang_uk">Ukrainisch</string>
     <string name="lang_de">Deutsch</string>
@@ -68,7 +65,6 @@
     <string name="exp_quality_body">Signalqualitätswert. Niedrige Qualität kann zu unzuverlässigen Ergebnissen führen.</string>
 
     <string name="exp_metrics_title">Metriken</string>
-    <string name="exp_metrics_body">CV, RMSSD, pNN50 beschreiben die Variabilität zwischen Schlägen. AC zeigt die Periodizitätsstärke.</string>
 
     <string name="exp_diagnosis_title">Mögliche Diagnose</string>
     <string name="exp_diagnosis_body">Grobes Muster-Matching anhand Rhythmus + Audio-Merkmalen. Keine EKG-Diagnose.</string>
@@ -76,6 +72,36 @@
     <string name="exp_diagnosis_conf_title">Diagnose-Sicherheit</string>
     <string name="exp_diagnosis_conf_body">Sicherheit des vorgeschlagenen Musters. MurmurScore entspricht dem Anteil hochfrequenter Energie.</string>
 
-    <string name="signal_graph_title">Signalvisualisierung (30 s)</string>
+    <string name="stage_10s">10s</string>
+    <string name="stage_20s">20s</string>
+    <string name="stage_30s">30s</string>
+    <string name="stage_60s">60s</string>
+    <string name="stage_hint">Tippe auf eine Zeitmarke, um zu sehen, was verfügbar wird.</string>
+
+    <string name="stage1_title">Nach 10 Sekunden</string>
+    <string name="stage1_body">Grober BPM-Wert und erste Signalqualität. Gut zur schnellen Orientierung.</string>
+
+    <string name="stage2_title">Nach 20 Sekunden</string>
+    <string name="stage2_body">Stabilere Beat-Erkennung und grundlegende Rhythmus-Regelmäßigkeit. Kurzfenster-Metriken können verrauscht sein.</string>
+
+    <string name="stage3_title">Nach 30 Sekunden</string>
+    <string name="stage3_body">Vollständige aktuelle Analyse: Rhythmus-Label, Confidence, HRV-ähnliche Metriken und Murmur-Score (bei ausreichender Qualität).</string>
+
+    <string name="progress_format">%1$.1f / %2$d s</string>
+    <integer name="progress_total_seconds">60</integer>
+    <string name="signal_graph_title">Signalvisualisierung (%.0f s)</string>
+
+
+    <string name="stage4_title">Nach 60 Sekunden</string>
+    <string name="stage4_body">Tiefenanalyse: stabilere HRV und Proxy für atemgekoppelte Variabilität (HF/RSA). Am besten ruhig sitzen und gleichmäßig atmen.</string>
+    <string name="stage_ready_10">Stufe 1 bereit (10s)</string>
+    <string name="stage_ready_20">Stufe 2 bereit (20s)</string>
+    <string name="stage_ready_30">Stufe 3 bereit (30s)</string>
+    <string name="stage_ready_60">Stufe 4 bereit (60s)</string>
+
+    <string name="instruction_place_phone">Für eine korrekte Messung drücken Sie das Mikrofon des Telefons fest an den Brustkorb. Atmen Sie normal und bleiben Sie ruhig. Nicht sprechen, nicht schlucken, keine Bewegungen.</string>
+
+    <string name="exp_metrics_body">CV (Variationskoeffizient): Variabilität der Schlag-zu-Schlag-Intervalle (RR). Höhere Werte bedeuten meist einen weniger stabilen Rhythmus.\n\nRMSSD: Kurzzeit-Variabilität (empfindlich für schnelle Änderungen). Steigt bei stärkerer atemgekoppelter Variabilität (RSA) und kann auch bei Unregelmäßigkeit steigen.\n\npNN50: Anteil benachbarter RR-Intervalle mit mehr als 50 ms Unterschied. Höhere Werte bedeuten meist stärkere Kurzzeit-Variabilität.\n\nAC (Autokorrelations-Stärke): wie periodisch das Signal wirkt. Höhere Werte bedeuten meist ein klareres wiederkehrendes Muster.\n\nWichtig: HRV-Metriken sind nur bei guter Signalqualität und ausreichender Aufnahmedauer zuverlässig. Bewegung, Schlucken, Sprechen oder erzwungenes Atmen können die Werte verfälschen.</string>
+
 
 </resources>
