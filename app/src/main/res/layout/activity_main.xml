@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:overScrollMode="ifContentScrolls">
 
     <LinearLayout
         android:id="@+id/root"
@@ -17,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
@@ -25,334 +27,437 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="@string/disclaimer" />
+            android:alpha="0.85"
+            android:text="@string/disclaimer"
+            android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/statusText"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/status_idle" />
+            android:layout_marginTop="14dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="16dp">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_marginTop="10dp"
-            android:max="30000"
-            android:progress="0" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
 
-        <TextView
-            android:id="@+id/progressTimeText"
+                <TextView
+                    android:id="@+id/statusText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_idle"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="10dp"
+                    android:max="60000"
+                    android:progress="0" />
+
+                <TextView
+                    android:id="@+id/progressTimeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/progress_default"
+                    android:textSize="13sp"
+                    android:alpha="0.9" />
+
+                <LinearLayout
+                    android:id="@+id/stageRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/stage10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingVertical="8dp"
+                        android:text="@string/stage_10s"
+                        android:textSize="13sp"
+                        android:alpha="0.95" />
+
+                    <TextView
+                        android:id="@+id/stage20"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingVertical="8dp"
+                        android:text="@string/stage_20s"
+                        android:textSize="13sp"
+                        android:alpha="0.95" />
+
+                    <TextView
+                        android:id="@+id/stage30"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingVertical="8dp"
+                        android:text="@string/stage_30s"
+                        android:textSize="13sp"
+                        android:alpha="0.95" />
+
+                    <TextView
+                        android:id="@+id/stage60"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingVertical="8dp"
+                        android:text="@string/stage_60s"
+                        android:textSize="13sp"
+                        android:alpha="0.95" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/stageHintText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/stage_hint"
+                    android:textSize="12sp"
+                    android:alpha="0.80" />
+
+                <TextView
+                    android:id="@+id/instructionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/instruction_place_phone"
+                    android:textSize="13sp"
+                    android:alpha="0.90" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/startBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/start" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/stopBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:text="@string/stop" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/langLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lang_label"
+                        android:textSize="13sp"
+                        android:alpha="0.85" />
+
+                    <Spinner
+                        android:id="@+id/langSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/progress_default" />
+            android:layout_marginTop="14dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="16dp">
 
-        <!-- Clickable stage markers -->
-        <LinearLayout
-            android:id="@+id/stageRow"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/resultsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/results_title"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- label row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/labelText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minLines="1"
+                        android:text="@string/label_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoLabelBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/confText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/conf_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoConfBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/bpmText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/bpm_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoBpmBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/qualityText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/quality_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoQualityBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/metricsText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minLines="1"
+                        android:text="@string/metrics_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoMetricsBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="#22FFFFFF" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/diagnosisText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minLines="1"
+                        android:text="@string/diagnosis_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoDiagnosisBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/diagnosisConfText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minLines="1"
+                        android:text="@string/diagnosis_conf_prefix"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/infoDiagnosisConfBtn"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:padding="0dp"
+                        android:text="@string/info_i" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginTop="14dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="16dp">
 
-            <TextView
-                android:id="@+id/stage10"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:gravity="center"
-                android:background="@android:color/transparent"
-                android:text="@string/stage_10s"
-                android:clickable="true"
-                android:focusable="true" />
+                android:orientation="vertical"
+                android:padding="14dp">
 
-            <TextView
-                android:id="@+id/stage20"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:gravity="center"
-                android:text="@string/stage_20s"
-                android:clickable="true"
-                android:focusable="true" />
+                <TextView
+                    android:id="@+id/signalTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signal_graph_title_static"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/stage30"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:gravity="center"
-                android:text="@string/stage_30s"
-                android:clickable="true"
-                android:focusable="true" />
+                <HorizontalScrollView
+                    android:id="@+id/signalScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="10dp"
+                    android:fillViewport="true"
+                    android:scrollbars="horizontal">
 
-            <TextView
-                android:id="@+id/stage60"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:gravity="center"
-                android:text="@string/stage_60s"
-                android:clickable="true"
-                android:focusable="true" />
-        </LinearLayout>
+                    <com.example.heartaudiocheck.ui.HeartSignalView
+                        android:id="@+id/signalView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </HorizontalScrollView>
 
-        <TextView
-            android:id="@+id/stageHintText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/stage_hint"
-            android:textSize="12sp" />
-
-
-        <TextView
-            android:id="@+id/instructionText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/instruction_place_phone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-
-            <Button
-                android:id="@+id/startBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/start" />
-
-            <Button
-                android:id="@+id/stopBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:text="@string/stop"
-                android:enabled="false" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lang_label"
-                android:layout_gravity="center_vertical" />
-
-            <Spinner
-                android:id="@+id/langSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp" />
-        </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="#33FFFFFF" />
-
-        <!-- RESULT ROWS -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/labelText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="2"
-                android:text="@string/label_prefix" />
-
-            <Button
-                android:id="@+id/infoLabelBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/confText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="1"
-                android:text="@string/conf_prefix" />
-
-            <Button
-                android:id="@+id/infoConfBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/bpmText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="1"
-                android:text="@string/bpm_prefix" />
-
-            <Button
-                android:id="@+id/infoBpmBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/qualityText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="1"
-                android:text="@string/quality_prefix" />
-
-            <Button
-                android:id="@+id/infoQualityBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/metricsText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="2"
-                android:text="@string/metrics_prefix" />
-
-            <Button
-                android:id="@+id/infoMetricsBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/diagnosisText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="2"
-                android:text="@string/diagnosis_prefix" />
-
-            <Button
-                android:id="@+id/infoDiagnosisBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/diagnosisConfText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minLines="2"
-                android:text="@string/diagnosis_conf_prefix" />
-
-            <Button
-                android:id="@+id/infoDiagnosisConfBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/info_i"
-                android:padding="0dp" />
-        </LinearLayout>
-
-        <!-- GRAPH SECTION -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#33FFFFFF" />
-
-        <TextView
-            android:id="@+id/signalTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/signal_graph_title" />
-
-        <HorizontalScrollView
-            android:id="@+id/signalScroll"
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:layout_marginTop="8dp"
-            android:fillViewport="true"
-            android:scrollbars="horizontal">
-
-            <com.example.heartaudiocheck.ui.HeartSignalView
-                android:id="@+id/signalView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </HorizontalScrollView>
+            android:layout_height="14dp" />
 
     </LinearLayout>
 </ScrollView>

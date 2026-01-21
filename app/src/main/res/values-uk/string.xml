@@ -3,113 +3,105 @@
 
     <string name="app_name">HeartAudioCheck</string>
 
-    <!-- Top texts -->
     <string name="disclaimer">Не є професійним медичним застосунком. Розробник не несе відповідальності за рішення, прийняті на основі результатів застосунку.</string>
+    <string name="ok">ОК</string>
+    <string name="info_i">i</string>
 
-    <!-- Status -->
+    <string name="start">Старт</string>
+    <string name="stop">Стоп</string>
+
+    <string name="lang_label">Мова</string>
+    <string name="lang_en">Англійська</string>
+    <string name="lang_uk">Українська</string>
+    <string name="lang_de">Німецька</string>
+
     <string name="status_idle">Очікування</string>
-    <string name="status_recording">Запис… не рухайтесь (30 с)</string>
+    <string name="status_recording">Запис…</string>
     <string name="status_done">Готово</string>
     <string name="status_stopped">Зупинено</string>
     <string name="status_recorder_failed">Не вдалося запустити запис</string>
 
-    <!-- Progress -->
-    <string name="progress_default">0 / 30 с</string>
-    <string name="progress_done">30.0 / 30 с</string>
-    <string name="progress_stopped_early">Зупинено раніше</string>
+    <string name="progress_default">0.0 / 60 с</string>
+    <string name="progress_format">%1$.1f / %2$d с</string>
+    <integer name="progress_total_seconds">60</integer>
 
-    <!-- Buttons / common -->
-    <string name="start">Старт</string>
-    <string name="stop">Стоп</string>
-    <string name="ok">ОК</string>
-    <string name="info_i">i</string>
+    <string name="stage_10s">10с</string>
+    <string name="stage_20s">20с</string>
+    <string name="stage_30s">30с</string>
+    <string name="stage_60s">60с</string>
 
-    <!-- Language -->
-    <string name="lang_label">Мова</string>
-    <string name="lang_en">Англійська</string>
-    <string name="lang_uk">Українська</string>
+    <string name="stage_hint">Натисніть на мітку часу, щоб побачити, що стане доступно.</string>
+    <string name="instruction_place_phone">Для коректного вимірювання прикладіть телефон мікрофоном впритул до грудної клітини. Дихайте як зазвичай і не рухайтесь. Не розмовляйте та уникайте зайвих рухів.</string>
 
-    <!-- Result prefixes -->
-    <string name="label_prefix">Мітка: -</string>
-    <string name="conf_prefix">Впевненість: -</string>
-    <string name="bpm_prefix">Пульс: -</string>
-    <string name="quality_prefix">Якість: -</string>
-    <string name="metrics_prefix">CV: -  RMSSD: -  pNN50: -  AC: -</string>
-    <string name="diagnosis_prefix">Можливий діагноз: -</string>
-    <string name="diagnosis_conf_prefix">Впевненість діагнозу: -</string>
+    <string name="results_title">Результати</string>
 
-    <!-- Result formatted values -->
+    <string name="label_prefix">Мітка:</string>
+    <string name="conf_prefix">Впевненість:</string>
+    <string name="bpm_prefix">Пульс:</string>
+    <string name="quality_prefix">Якість:</string>
+    <string name="metrics_prefix">CV / RMSSD / pNN50 / AC:</string>
+    <string name="diagnosis_prefix">Можливий діагноз:</string>
+    <string name="diagnosis_conf_prefix">Впевненість діагнозу:</string>
+
     <string name="label_value">Мітка: %1$s</string>
     <string name="conf_value">Впевненість: %1$d%%</string>
     <string name="bpm_value">Пульс: %1$.1f</string>
     <string name="quality_value">Якість: %1$d%%</string>
-    <string name="metrics_value">CV: %1$.3f  RMSSD: %2$.3f  pNN50: %3$.2f  AC: %4$.2f</string>
+    <string name="metrics_value">CV: %1$.3f   RMSSD: %2$.3f   pNN50: %3$.2f   AC: %4$.2f</string>
     <string name="diagnosis_value">Можливий діагноз: %1$s</string>
     <string name="diagnosis_conf_value">Впевненість діагнозу: %1$d%% (murmurScore %2$.2f)</string>
 
-    <!-- Label codes -->
     <string name="label_regular">Регулярний ритм</string>
     <string name="label_irregular">Нерегулярний ритм</string>
     <string name="label_insufficient">Недостатній сигнал</string>
 
-    <!-- Diagnosis codes -->
-    <string name="diag_regular">Регулярний ритм</string>
+    <string name="diag_regular">Регулярний</string>
     <string name="diag_afib_like">Можливий патерн, схожий на фібриляцію передсердь</string>
     <string name="diag_bigeminy_like">Можливий патерн, схожий на бігемінію</string>
     <string name="diag_murmur_like">Можливий патерн із ознаками шумів</string>
-    <string name="diag_non_specific">Специфічний патерн не виявлено</string>
-    <string name="diag_insufficient">Недостатній сигнал для діагнозу</string>
+    <string name="diag_non_specific">Неспецифічна нерегулярність</string>
+    <string name="diag_insufficient">Недостатньо даних</string>
 
-    <!-- Explanations (dialogs) -->
+    <string name="signal_graph_title">Візуалізація сигналу (%.0f с)</string>
+    <string name="signal_graph_title_static">Візуалізація сигналу</string>
+
+    <!-- Info dialogs -->
     <string name="exp_label_title">Мітка</string>
-    <string name="exp_label_body">Загальна класифікація ритму за інтервалами між ударами.</string>
+    <string name="exp_label_body">Загальна класифікація ритму.</string>
 
     <string name="exp_conf_title">Впевненість</string>
-    <string name="exp_conf_body">Наскільки алгоритм впевнений у мітці ритму з урахуванням якості сигналу та регулярності.</string>
+    <string name="exp_conf_body">Оцінка впевненості алгоритму щодо мітки.</string>
 
     <string name="exp_bpm_title">Пульс</string>
     <string name="exp_bpm_body">Оцінка частоти серцевих скорочень за детектованими ударами.</string>
 
     <string name="exp_quality_title">Якість</string>
-    <string name="exp_quality_body">Оцінка якості сигналу. Низька якість може давати ненадійні результати.</string>
-
-
-    <string name="exp_diagnosis_title">Можливий діагноз</string>
-    <string name="exp_diagnosis_body">Грубе співставлення патерна за ритмом та аудіо-ознаками. Це не ЕКГ-діагноз.</string>
-
-    <string name="exp_diagnosis_conf_title">Впевненість діагнозу</string>
-    <string name="exp_diagnosis_conf_body">Впевненість у запропонованому патерні. MurmurScore відображає частку високочастотної енергії.</string>
-    <string name="lang_de">Німецька</string>
-    <string name="stage_10s">10с</string>
-    <string name="stage_20s">20с</string>
-    <string name="stage_30s">30с</string>
-    <string name="stage_60s">60с</string>
-    <string name="stage_hint">Натисніть на мітку часу, щоб побачити, що стане доступно.</string>
-
-    <string name="stage1_title">Після 10 секунд</string>
-    <string name="stage1_body">Груба оцінка BPM та початкова якість сигналу. Підходить для швидкої орієнтації.</string>
-
-    <string name="stage2_title">Після 20 секунд</string>
-    <string name="stage2_body">Стабільніше знаходження ударів і базова оцінка регулярності. Метрики на короткому вікні можуть бути шумними.</string>
-
-    <string name="stage3_title">Після 30 секунд</string>
-    <string name="stage3_body">Повний поточний аналіз: мітка ритму, впевненість, HRV-метрики та murmur score (якщо якість сигналу достатня).</string>
-
-    <string name="stage4_title">Після 60 секунд</string>
-    <string name="stage4_body">Поглиблене вікно: стабільніші HRV та оцінка варіабельності, пов’язаної з диханням (HF/RSA). Найкраще — сидячи спокійно і рівно дихаючи.</string>
-    <string name="stage_ready_10">Етап 1 готовий (10с)</string>
-    <string name="stage_ready_20">Етап 2 готовий (20с)</string>
-    <string name="stage_ready_30">Етап 3 готовий (30с)</string>
-    <string name="stage_ready_60">Етап 4 готовий (60с)</string>
-
-    <string name="progress_format">%1$.1f / %2$d с</string>
-    <integer name="progress_total_seconds">60</integer>
-    <string name="signal_graph_title">Візуалізація сигналу (%.0f с)</string>
-
-    <string name="instruction_place_phone">Для коректного вимірювання прикладіть телефон мікрофоном впритул до грудної клітини. Дихайте як зазвичай і не рухайтесь. Не розмовляйте, не ковтайте, уникайте зайвих рухів.</string>
+    <string name="exp_quality_body">Оцінка якості сигналу.</string>
 
     <string name="exp_metrics_title">Метрики</string>
-    <string name="exp_metrics_body">CV (коефіцієнт варіації): варіабельність інтервалів між ударами (RR). Більші значення зазвичай означають менш стабільний ритм.\n\nRMSSD: короткочасна варіабельність (чутлива до швидких змін). Зростає при вираженій дихальній аритмії (RSA) і може зростати при нерегулярності.\n\npNN50: частка сусідніх RR-інтервалів, що відрізняються більш ніж на 50 мс. Вищі значення зазвичай означають більшу короткочасну варіабельність.\n\nAC (сила автокореляції): наскільки «періодично» виглядає сигнал. Вищі значення зазвичай означають чіткіший повторюваний патерн.\n\nВажливо: HRV-метрики коректні лише за доброї якості сигналу та достатньої тривалості запису. Рухи, ковтання, розмова або навмисно змінене дихання можуть спотворювати результат.</string>
+    <string name="exp_metrics_body">CV (коефіцієнт варіації): варіабельність інтервалів між ударами (RR). Більші значення зазвичай означають менш стабільний ритм.\n\nRMSSD: короткочасна варіабельність (чутлива до швидких змін). Зростає при вираженій дихальній аритмії (RSA) і може зростати при нерегулярності.\n\npNN50: частка сусідніх RR-інтервалів, що відрізняються більш ніж на 50 мс. Вищі значення зазвичай означають більшу короткочасну варіабельність.\n\nAC (сила автокореляції): наскільки «періодично» виглядає сигнал. Вищі значення зазвичай означають чіткіший повторюваний патерн.\n\nВажливо: HRV-подібні метрики коректні лише за доброї якості сигналу та достатньої тривалості запису. Рухи, ковтання, розмова або навмисно змінене дихання можуть спотворювати результат.</string>
 
+    <string name="exp_diagnosis_title">Діагноз</string>
+    <string name="exp_diagnosis_body">Евристична підказка щодо можливого патерну (не медичний висновок).</string>
+
+    <string name="exp_diagnosis_conf_title">Впевненість діагнозу</string>
+    <string name="exp_diagnosis_conf_body">Впевненість у запропонованому патерні та додатковий показник.</string>
+
+    <string name="stage1_title">Етап 10с</string>
+    <string name="stage1_body">Базова оцінка пульсу (BPM).</string>
+
+    <string name="stage2_title">Етап 20с</string>
+    <string name="stage2_body">Стабільніша оцінка ритму.</string>
+
+    <string name="stage3_title">Етап 30с</string>
+    <string name="stage3_body">Повний аналіз.</string>
+
+    <string name="stage4_title">Етап 60с</string>
+    <string name="stage4_body">Розширений аналіз (HRV / RSA-proxy).</string>
+
+    <string name="stage_ready_10">Аналіз 10с готовий</string>
+    <string name="stage_ready_20">Аналіз 20с готовий</string>
+    <string name="stage_ready_30">Аналіз 30с готовий</string>
+    <string name="stage_ready_60">Аналіз 60с готовий</string>
 
 </resources>
