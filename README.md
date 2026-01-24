@@ -29,12 +29,22 @@ Android application for offline heart sound analysis using microphone input.
 ## Disclaimer
 This application does not provide medical diagnosis.
 
+## Photos
+Before recording for 60 seconds:
+
+<img width="397" height="852" alt="2026-01-24_181328" src="https://github.com/user-attachments/assets/04efc6e0-096f-44a8-b632-84efed5f87da" />
+<img width="397" height="852" alt="2026-01-24_183814" src="https://github.com/user-attachments/assets/dacb1336-3096-450b-94b4-96d845117461" />
+
+
+After recording for 60 seconds:
+
+<img width="397" height="852" alt="2026-01-24_183308" src="https://github.com/user-attachments/assets/e777ccc7-c5f0-4fd5-aa84-b9d7562004cd" />
+<img width="397" height="852" alt="2026-01-24_183326" src="https://github.com/user-attachments/assets/ad559546-3b62-4891-97de-3a1fa23a1a30" />
 
 
 
 
-
-MIT License
+## MIT License
 
 Copyright (c) 2026 Vitalii Reshetnyk
 
